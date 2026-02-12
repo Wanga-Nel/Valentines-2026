@@ -216,7 +216,7 @@ export default function ValentineProposal() {
                 {!isAccepted && (
                     <div className="flex items-center gap-2 text-primary/60 font-medium">
                         
-                        <p className="text-[10px] uppercase tracking-widest">...~WN~~Designe with love~~WN~...</p>
+                        <p className="text-[10px] uppercase tracking-widest">...~WN~~Designed with love~~WN~...</p>
                         
                     </div>
                 )}
