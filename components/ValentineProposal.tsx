@@ -33,8 +33,16 @@ export default function ValentineProposal() {
     const [isAccepted, setIsAccepted] = useState(false);
     const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
     const [noCount, setNoCount] = useState(0);
+    const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' ? window.innerWidth <= 640 : false);
     const containerRef = useRef<HTMLDivElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth <= 640);
+        onResize();
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
     const handleYes = () => {
         setIsAccepted(true);
@@ -83,15 +91,17 @@ export default function ValentineProposal() {
             {/* Floating Decoration Elements */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 {/* Deterministic positions so server and client markup match */}
-                {Array.from({ length: 120 }).map((_, i) => {
+                {/* Render fewer, lighter hearts on mobile for performance */}
+                {(() => {
+                    const heartCount = isMobile ? 8 : 120;
+                    return Array.from({ length: heartCount }).map((_, i) => {
                     const det = (n: number, seed = 13) => {
                         const x = Math.sin(n * 127.1 + seed * 0.01) * 43758.5453;
                         return Math.abs(x - Math.floor(x));
                     };
-
                     const left = (det(i, 11) * 100).toFixed(4);
                     const top = (det(i + 1, 22) * 100).toFixed(4);
-                    const sizes = ["text-2xl", "text-3xl", "text-4xl", "text-5xl"];
+                    const sizes = isMobile ? ["text-sm", "text-base", "text-lg"] : ["text-2xl", "text-3xl", "text-4xl", "text-5xl"];
                     const size = sizes[Math.floor(det(i + 2, 33) * sizes.length)];
                     const delay = Number((det(i + 3, 44) * 1.5).toFixed(2));
 
@@ -103,7 +113,8 @@ export default function ValentineProposal() {
                             position={{ left: `${left}%`, top: `${top}%` }}
                         />
                     );
-                })}
+                    });
+                })()}
             </div>
 
             {/* Navigation */}

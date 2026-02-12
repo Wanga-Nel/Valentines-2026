@@ -72,3 +72,29 @@ body {
     opacity: 0;
   }
 }
+
+/* Mobile-specific adjustments */
+@media (max-width: 640px) {
+  /* Hide heavy decorative hearts on small screens to improve performance and readability */
+  .hearts-container,
+  .floating-heart {
+    display: none !important;
+  }
+
+  /* Slightly reduce padding on mobile and ensure the card fits well */
+  .romantic-gradient {
+    padding: 1rem;
+  }
+
+  main[role] {
+    padding: 0 1rem;
+  }
+
+  /* Improve touch targets for small screens */
+  .group,
+  .flex .group {
+    min-height: 48px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
