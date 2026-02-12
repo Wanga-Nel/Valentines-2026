@@ -181,7 +181,12 @@ export default function ValentineProposal() {
                                     <motion.button
                                         animate={{ x: noButtonPos.x, y: noButtonPos.y }}
                                         onMouseEnter={handleNoHover}
+                                        // Support pointer and touch events for mobile devices
+                                        onPointerEnter={handleNoHover}
+                                        onTouchStart={(e) => { e.preventDefault(); handleNoHover(); }}
+                                        onFocus={handleNoHover}
                                         className="flex min-w-[100px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-background-light border border-zinc-200 text-[#181112] text-sm font-medium transition-all hover:bg-zinc-100 whitespace-nowrap"
+                                        aria-label="No"
                                     >
                                         <span className="truncate">{noPhrases[Math.min(noCount, noPhrases.length - 1)]}</span>
                                     </motion.button>
